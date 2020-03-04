@@ -7,7 +7,7 @@ For storing and generating TOTP secrets and OTP:s for multiple accounts using sq
 example
 
 $ ./oath_client2.py -l  
-Accounts in db: 
+Accounts in db:  
 f7.storedsafe.com  
 github.com 
 
