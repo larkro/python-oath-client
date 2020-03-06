@@ -39,7 +39,7 @@ class OathDb():
         """ List all accounts in db """
         c = self.conn.cursor()
         for row in c.execute("SELECT * FROM oath ORDER BY account"):
-            if (row[4] != None):
+            if (row[4] is not None):
                 print(row[0] + " : " + row[4])
             else:
                 print(row[0])
