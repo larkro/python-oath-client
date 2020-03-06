@@ -18,7 +18,7 @@ import pyotp
 
 homeDir = expanduser("~")
 default_db_file = homeDir + "/.oath_auth2.db"
-#os.umask(0066)
+# os.umask(0066)
 
 
 class OathDb():
