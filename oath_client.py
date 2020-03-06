@@ -20,6 +20,7 @@ homeDir = expanduser("~")
 default_db_file = homeDir + "/.oath_auth2.db"
 #os.umask(0066)
 
+
 class OathDb():
     """ Provides access to database with information for OATH secrets. """
     def __init__(self, filename):
@@ -81,11 +82,13 @@ class OathDb():
         c.execute("DELETE FROM oath WHERE account = ?", (entry.data["delete"],))
         self.conn.commit()
 
+
 class OathEntry():
     """ Class to hold a row of OathDb. """
     def __init__(self, row):
         if row:
             self.data = row
+
 
 def generate_random_salt():
     """
@@ -95,6 +98,7 @@ def generate_random_salt():
     """
     salt = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
     return salt
+
 
 def generate_random_rounds():
     """
@@ -106,6 +110,7 @@ def generate_random_rounds():
     rounds = random.randint(100000, 200000)
     return rounds
 
+
 def list_accounts():
     """  List availible accounts if any """
     db = OathDb(args.db_file)
@@ -115,6 +120,7 @@ def list_accounts():
         sys.stderr.write("ERROR: %s\n" % (e))
         return False
     return True
+
 
 def display_oath():
     """ login, decrypt key, decrypt client and display otp """
@@ -175,6 +181,7 @@ def display_oath():
             time.sleep(6)
             print(db_acc.data["account"] + " : " + totp.now())
 
+
 def create_pwstring():
     """ Store a account """
     db = OathDb(args.db_file)
@@ -226,6 +233,7 @@ def create_pwstring():
         return False
     return True
 
+
 def create_login(pwd):
     """ Create main account used for encrypting oath accounts """
     password = bytes(str(pwd), encoding='utf8')
@@ -256,6 +264,7 @@ def create_login(pwd):
         return False
     return True
 
+
 def delete_account():
     """ Delete account """
     data = {"delete": args.delete}
@@ -267,6 +276,7 @@ def delete_account():
         sys.stderr.write("ERROR: %s\n" % (e))
         return False
     return True
+
 
 def parse_args():
     """ argument parser """
@@ -280,6 +290,7 @@ def parse_args():
     parser.add_argument('-D','--db-file', dest='db_file', default=default_db_file, required=False,
         help='DB file for storing oath accounts', metavar='FN',)
     return parser.parse_args()
+
 
 def main():
     """ main shiznitz """
@@ -330,6 +341,7 @@ def main():
     if args.list:
         print("Accounts in db:")
         list_accounts()
+
 
 if __name__ == "__main__":
     main()
