@@ -60,10 +60,10 @@ class OathDb():
         """ Add entry to database. """
         c = self.conn.cursor()
         c.execute("INSERT INTO oath (account, secret, rounds, salt, desc) VALUES (?, ?, ?, ?, ?)", (entry.data["account"], \
-            entry.data["secret"], \
-            entry.data["rounds"], \
-            entry.data["salt"], \
-            entry.data["desc"],))
+                                                                                                    entry.data["secret"], \
+                                                                                                    entry.data["rounds"], \
+                                                                                                    entry.data["salt"], \
+                                                                                                    entry.data["desc"],))
         self.conn.commit()
         return c.rowcount == 1
 
@@ -71,8 +71,8 @@ class OathDb():
         """ Add a login entry to database. """
         c = self.conn.cursor()
         c.execute("INSERT INTO login (shash, numb, rounds, salt) VALUES (?, ?, ?, ?)", (entry.data["shash"], 1, \
-            entry.data["rounds"], \
-            entry.data["salt"],))
+                                                                                        entry.data["rounds"], \
+                                                                                        entry.data["salt"],))
         self.conn.commit()
         return c.rowcount == 1
 
@@ -219,11 +219,11 @@ def create_pwstring():
     f = Fernet(key)
     token = f.encrypt(secret)
     data = {"account": args.create,
-        "secret": token,
-        "rounds": iterations,
-        "salt": salt,
-        "desc": args.desc,
-    }
+            "secret": token,
+            "rounds": iterations,
+            "salt": salt,
+            "desc": args.desc,
+            }
     entry = OathEntry(data)
     db = OathDb(args.db_file)
     try:
@@ -252,9 +252,9 @@ def create_login(pwd):
     token = f.encrypt(shash)
 
     data = {"shash": token,
-        "rounds": iterations,
-        "salt": salt,
-    }
+            "rounds": iterations,
+            "salt": salt,
+            }
     entry = OathEntry(data)
     db = OathDb(args.db_file)
     try:
@@ -281,14 +281,14 @@ def delete_account():
 def parse_args():
     """ argument parser """
     parser = argparse.ArgumentParser(description='OATH Authenticator',
-        add_help=True, formatter_class=argparse.ArgumentDefaultsHelpFormatter,)
+                                     add_help=True, formatter_class=argparse.ArgumentDefaultsHelpFormatter,)
     parser.add_argument('-l','--list',action='store_true', dest='list', help='List possible OATH accounts', required=False)
     parser.add_argument('-r','--remove', dest='delete', help='Remove OATH account', metavar='ACCOUNT', required=False)
     parser.add_argument('-c','--create', dest='create', help='Create OATH account', metavar='ACCOUNT', required=False)
     parser.add_argument('-d','--desc', dest='desc', help='description of the account, optionally', required=False)
     parser.add_argument('-o','--otp', dest='otp', help='Get an otp from an account', metavar='ACCOUNT', required=False)
     parser.add_argument('-D','--db-file', dest='db_file', default=default_db_file, required=False,
-        help='DB file for storing oath accounts', metavar='FN',)
+                        help='DB file for storing oath accounts', metavar='FN',)
     return parser.parse_args()
 
 
