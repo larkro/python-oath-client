@@ -134,8 +134,8 @@ def display_oath():
     kdfl = PBKDF2HMAC(
         algorithm=hashes.SHA512(),
         length=32,
-        salt = login.data["salt"],
-        iterations = login.data["rounds"],
+        salt=login.data["salt"],
+        iterations=login.data["rounds"],
         backend=default_backend()
     )
     keyl = base64.urlsafe_b64encode(kdfl.derive(password))
@@ -153,8 +153,8 @@ def display_oath():
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA512(),
         length=32,
-        salt = db_acc.data["salt"],
-        iterations = db_acc.data["rounds"],
+        salt=db_acc.data["salt"],
+        iterations=db_acc.data["rounds"],
         backend=default_backend()
     )
     key = base64.urlsafe_b64encode(kdf.derive(unlock))
@@ -162,11 +162,11 @@ def display_oath():
     totp = pyotp.TOTP(f.decrypt(db_acc.data["secret"]))
     tick = totp.now()
     print(db_acc.data["account"] + " : " + tick,)
-    print("Valid for ", end = '')
+    print("Valid for ", end='')
     now = int((datetime.datetime.now().strftime('%S')))
     if (now < 30):
         valid = 30 - now
-        print(valid, end = '')
+        print(valid, end='')
         print(" more seconds.")
         if (valid < 6):
             print("short time left, will generate a new one for you, hang on")
@@ -174,7 +174,7 @@ def display_oath():
             print(db_acc.data["account"] + " : " + totp.now())
     else:
         valid = 60 - now
-        print(valid, end = '')
+        print(valid, end='')
         print(" more seconds.")
         if (valid < 6):
             print("short time left, will generate a new one for you, hang on")
@@ -194,8 +194,8 @@ def create_pwstring():
     kdfl = PBKDF2HMAC(
         algorithm=hashes.SHA512(),
         length=32,
-        salt = login.data["salt"],
-        iterations = login.data["rounds"],
+        salt=login.data["salt"],
+        iterations=login.data["rounds"],
         backend=default_backend()
     )
     keyl = base64.urlsafe_b64encode(kdfl.derive(password))
@@ -211,8 +211,8 @@ def create_pwstring():
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA512(),
         length=32,
-        salt = salt,
-        iterations = iterations,
+        salt=salt,
+        iterations=iterations,
         backend=default_backend()
     )
     key = base64.urlsafe_b64encode(kdf.derive(unlock))
@@ -243,8 +243,8 @@ def create_login(pwd):
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA512(),
         length=32,
-        salt = salt,
-        iterations = iterations,
+        salt=salt,
+        iterations=iterations,
         backend=default_backend()
     )
     key = base64.urlsafe_b64encode(kdf.derive(password))
