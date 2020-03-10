@@ -4,6 +4,16 @@ TOTP command line client in python
 
 For storing and generating TOTP secrets and OTP:s for multiple accounts using sqlite and PBKDF2.
 
+## Prerequisites
+
+Use the package manager pip to install requirements.
+
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
 example
 
 $ ./oath_client2.py -l  
